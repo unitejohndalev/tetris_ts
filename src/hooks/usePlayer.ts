@@ -30,7 +30,7 @@ export const usePlayer = () => {
     let offset = 1
     while (isColliding(clonedPlayer, stage, {x:0, y: 0})) {
       clonedPlayer.posX += offset;
-      offset = -(offset + 1(offset > 0 ? 1 : -1))
+      offset = -(offset + (offset > 0 ? 1 : -1))
 
       if (offset > clonedPlayer.tetromino[0].length) {
         clonedPlayer.pos.x = posX;

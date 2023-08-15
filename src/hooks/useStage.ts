@@ -1,5 +1,5 @@
 import { createStage } from "@/gameHelpers";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 //* TYPES
 import type { PLAYER } from "./usePlayer";
@@ -19,7 +19,7 @@ export const useStage = (player: PLAYER, resetPlayer: () => void) => {
 
     const sweepRows = (newStage: STAGE) : STAGE => {
       return newStage.reduce((ack, row) => {
-        // * IF WE DON'T FIOND A 0 IT MEANS THAT THE ROW IS FULL AND SHOULD BE CLEARED
+        // * IF WE DON'T FIND A 0 IT MEANS THAT THE ROW IS FULL AND SHOULD BE CLEARED
         if(row.findIndex(cell => cell[0] === 0) === -1) {
           setRowsCleared(prev => prev + 1)
           // * CREATE AN EMPTY ROW AT THE BEGINNING OF THE ARRAY TO PUSH THE TETROMINO DOWN INSTEAD OF RETURNING THE CLEARED ROW
