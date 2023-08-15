@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 //* TYPES
 import type { PLAYER } from "./usePlayer";
 
-export type STAGECELL = [string | number, string];
-export type STAGE = STAGECELL[][];
+ type STAGECELL = [string | number, string];
+ type STAGE = STAGECELL[][];
 
 export const useStage = (player: PLAYER, resetPlayer: () => void) => {
   const [stage, setStage] = useState(createStage());
