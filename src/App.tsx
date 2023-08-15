@@ -15,7 +15,10 @@ import StartButton from './components/StartButton/StartButton';
 // Styles
 import { StyledTetrisWrapper, StyledTetris } from './App.styles';
 
+
 const App: React.FC = () => {
+
+
   const [dropTime, setDroptime] = React.useState<null | number>(null);
   const [gameOver, setGameOver] = React.useState(true);
 
@@ -92,7 +95,7 @@ const App: React.FC = () => {
 
   useInterval(() => {
     drop();
-  }, dropTime);
+  },dropTime);
 
   return (
     <StyledTetrisWrapper role='button' tabIndex={0} onKeyDown={move} onKeyUp={keyUp} ref={gameArea}>
