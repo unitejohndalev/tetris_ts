@@ -1,7 +1,10 @@
 import { PLAYER } from "@/hooks/usePlayer";
 import { STAGE_WIDTH, STAGE_HEIGHT } from "./setup";
 import { TETROMINOS } from "./setup";
-import { STAGE } from "@/components/Stage";
+
+export type STAGECELL = [keyof typeof TETROMINOS, string];
+export type STAGE = STAGECELL[][]; 
+
 
 export const createStage = () =>
   Array.from(Array(STAGE_HEIGHT), () => Array(STAGE_WIDTH).fill([0, "clear"]));

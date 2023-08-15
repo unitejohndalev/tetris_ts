@@ -1,9 +1,7 @@
 import { isColliding, randomTetromino } from "@/gameHelpers";
 import { STAGE_WIDTH } from "@/setup";
 import { useCallback, useState } from "react";
-
-type STAGECELL = [string | number, string];
-type STAGE = STAGECELL[][];
+import { STAGE } from "./useStage";
 
 export type PLAYER = {
   pos: {

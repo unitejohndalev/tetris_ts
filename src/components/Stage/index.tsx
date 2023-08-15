@@ -4,8 +4,8 @@ import { StyledStage } from './Stage.styles'
 import { TETROMINOS } from '@/setup';
 
 
- type STAGECELL = [keyof typeof TETROMINOS, string];
- type STAGE = STAGECELL[][]; 
+export type STAGECELL = [keyof typeof TETROMINOS, string];
+export type STAGE = STAGECELL[][]; 
 
 type Props = {
   stage: STAGE;
