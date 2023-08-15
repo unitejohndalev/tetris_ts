@@ -1,7 +1,7 @@
-import { isColliding, randomTetromino } from "@/gameHelpers";
-import { STAGE_WIDTH } from "@/setup";
-import { useCallback, useState } from "react";
-import { STAGE } from "./useStage";
+import React from 'react';
+import { STAGE_WIDTH } from '../setup';
+import { isColliding, randomTetromino } from '../gameHelpers';
+import { STAGE } from './useStage';
 
 export type PLAYER = {
   pos: {
@@ -11,27 +11,28 @@ export type PLAYER = {
   tetromino: (string | number)[][];
   collided: boolean;
 };
+
 export const usePlayer = () => {
-  const [player, setPlayer] = useState({} as PLAYER);
+  const [player, setPlayer] = React.useState({} as PLAYER);
 
   const rotate = (matrix: PLAYER['tetromino']) => {
-    // MAKE THE ROWS TO BECOME COLS (TRANSPOSE)
-    const mtrx = matrix.map((_, i) => matrix.map(column => column[i]))
-    //REVERSE EACH ROW TO GET A ROTATED MATRIX
-    return mtrx.map(row => row.reverse())
-  }
+    // Make the rows to become cols (transpose)
+    const mtrx = matrix.map((_, i) => matrix.map(column => column[i]));
+    // Reverse each row to get a rotated matrix
+    return mtrx.map(row => row.reverse());
+  };
 
   const playerRotate = (stage: STAGE): void => {
     const clonedPlayer = JSON.parse(JSON.stringify(player));
     clonedPlayer.tetromino = rotate(clonedPlayer.tetromino);
 
-    //* THIS ONE IS SO THAT THE PLAYER CANT ROTATE INTO THE WALLS
-    const posX = clonedPlayer.pos.X
-    let offset = 1
-    while (isColliding(clonedPlayer, stage, {x:0, y: 0})) {
-      clonedPlayer.posX += offset;
-      offset = -(offset + (offset > 0 ? 1 : -1))
-
+    // This one is so the player can't rotate into the walls or other tetrominos that's merged
+    const posX = clonedPlayer.pos.x;
+    let offset = 1;
+    while (isColliding(clonedPlayer, stage, { x: 0, y: 0 })) {
+      clonedPlayer.pos.x += offset;
+      offset = -(offset + (offset > 0 ? 1 : -1));
+      
       if (offset > clonedPlayer.tetromino[0].length) {
         clonedPlayer.pos.x = posX;
         return;
@@ -39,32 +40,25 @@ export const usePlayer = () => {
     }
 
     setPlayer(clonedPlayer);
+  };
 
-  }
-
-  const updatePlayerPos = ({
-    x,
-    y,
-    collided,
-  }: {
-    x: number;
-    y: number;
-    collided: boolean;
-  }): void => {
-    setPlayer((prev) => ({
+  const updatePlayerPos = ({ x, y, collided }: { x: number; y: number; collided: boolean }): void => {
+    setPlayer(prev => ({
       ...prev,
       pos: { x: (prev.pos.x += x), y: (prev.pos.y += y) },
-      collided,
+      collided
     }));
   };
 
-  const resetPlayer = useCallback(
-    (): void => setPlayer({
-        pos: {x: STAGE_WIDTH / 2 - 2, y: 0 },
+  const resetPlayer = React.useCallback(
+    (): void =>
+      setPlayer({
+        pos: { x: STAGE_WIDTH / 2 - 2, y: 0 },
         tetromino: randomTetromino().shape,
         collided: false
-    }), []
-  )
+      }),
+    []
+  );
 
-  return {player, updatePlayerPos, resetPlayer, playerRotate};
+  return { player, updatePlayerPos, resetPlayer, playerRotate };
 };
